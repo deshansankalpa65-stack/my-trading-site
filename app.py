@@ -11,7 +11,7 @@ st.set_page_config(
 
 st.title("📈 Golden Hunter Visual Web Dashboard")
 st.caption(
-    "Live Heikin Ashi & Linear Regression (LSMA) Strategy Analyzer |
+    "Live Heikin Ashi & Linear Regression (LSMA) Strategy Analyzer 
 )
 
 # ------------------------------------------------------------------
