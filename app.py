@@ -30,7 +30,7 @@ selected_asset = st.sidebar.selectbox("Select Asset", list(ticker_options.keys()
 ticker_symbol = ticker_options[selected_asset]
 
 # Timeframe සහ Data Period එක
-timeframe = st.sidebar.selectbox("Timeframe", ["1h", "1d", "1wk"], index=1)
+timeframe = st.sidebar.selectbox("Timeframe", ["1m", "5m", "15m", "30m", "1h", "1d", "1wk"], index=1)
 data_period = st.sidebar.selectbox("Historical Data Range", ["1mo", "3mo", "6mo", "1y"], index=2)
 
 # Indicator Configurations
