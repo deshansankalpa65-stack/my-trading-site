@@ -30,8 +30,20 @@ selected_asset = st.sidebar.selectbox("Select Asset", list(ticker_options.keys()
 ticker_symbol = ticker_options[selected_asset]
 
 # Timeframe සහ Data Period එක
-timeframe = st.sidebar.selectbox("Timeframe", ["1m", "5m", "15m", "30m", "1h", "1d", "1wk"], index=1)
-data_period = st.sidebar.selectbox("Historical Data Range", ["1mo", "3mo", "6mo", "1y"], index=2)
+# ---- ටයිම්ෆ්‍රේම් එක අනුව උපරිම සපෝට් කරන Range එක auto හැදීම ----
+if timeframe == "1m":
+    valid_period = "7d"     # 1m වලට උපරිම දින 7යි
+elif timeframe in ["5m", "15m", "30m", "1h"]:
+    valid_period = "60d"    # මේවට උපරිම දින 60යි
+else:
+    valid_period = "1mo"    # Daily හෝ ඊට වැඩි ඒවට මාසයක් හෝ ඊට වැඩි ප්‍රමාණයක් පුළුවන්
+
+# ---- දැන් මෙතනට තමයි ඩේටා බාන්නේ ----
+data = yf.download(
+    tickers="GC=F",            # Gold (XAU/USD) ticker එක
+    period=valid_period,       # 🔥 මෙතනට 'valid_period' එක දුන්නම Error එක එන්නේ නැහැ!
+    interval=timeframe         # ඔයා සිලෙක්ට් කරපු ටයිම්ෆ්‍රේම් එක
+)
 
 # Indicator Configurations
 lsma_length = st.sidebar.slider("LSMA (Golden Line) Length", min_value=5, max_value=100, value=50)
