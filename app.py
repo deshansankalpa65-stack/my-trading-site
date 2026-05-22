@@ -118,7 +118,7 @@ def calculate_golden_hunter(df, period):
 # Data Fetching & Rendering
 # ------------------------------------------------------------------
 with st.spinner("Fetching live market data..."):
-    data = yf.download(ticker_symbol, period=data_period, interval=timeframe)
+    data = yf.download(ticker_symbol, period=valid_period, interval=timeframe)
 
 if not data.empty:
     # Multi-index columns flat කරගැනීම (yfinance fresh update fix)
