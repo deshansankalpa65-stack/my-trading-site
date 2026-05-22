@@ -188,3 +188,39 @@ if not data.empty:
         st.dataframe(df_processed[['Open', 'High', 'Low', 'Close', 'LSMA', 'Buy_Signal', 'Sell_Signal']].tail(20))
 else:
     st.error("No data found for the selected asset/timeframe. Please try again.")
+    # ==========================================
+# 🔥 මෙතනින් පල්ලෙහාට තියෙන්නේ MT5 Chart එකයි 🔥
+# ==========================================
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+# 1. Subplots හැදීම (උඩ Candlestick, යට Volume)
+fig_mt5 = make_subplots(
+    rows=2, cols=1, 
+    shared_xaxes=True, 
+    vertical_spacing=0.03, 
+    row_width=[0.2, 0.8]
+)
+
+# 2. Candlestick Chart එක එකතු කිරීම
+fig_mt5.add_trace(
+    go.Candlestick(
+        x=data.index, open=data['Open'], high=data['High'], low=data['Low'], close=data['Close'], name="Price",
+        increasing_line_color='#26a69a', decreasing_line_color='#ef5350',
+        increasing_fillcolor='#26a69a', decreasing_fillcolor='#ef5350'
+    ), row=1, col=1
+)
+
+# 3. Volume බාර්ස් එකතු කිරීම
+if 'Volume' in data.columns:
+    fig_mt5.add_trace(go.Bar(x=data.index, y=data['Volume'], name="Volume", marker_color='#26a69a', opacity=0.4), row=2, col=1)
+
+# 4. MT5 Dark Layout එක හැදීම
+fig_mt5.update_layout(
+    template="plotly_dark", xaxis_rangeslider_visible=False, height=600,
+    paper_bgcolor='#161a25', plot_bgcolor='#161a25',
+    yaxis=dict(gridcolor='#232936', zeroline=False), xaxis=dict(gridcolor='#232936', zeroline=False)
+)
+
+# 5. Chart එක වෙබ් පිටුවේ පෙන්වීම
+st.plotly_chart(fig_mt5, use_container_width=True)
